@@ -5,7 +5,11 @@ services: logic-apps
 ms.suite: integration
 ms.reviewer: estfan, rarayudu, azla
 ms.topic: how-to
-ms.date: 11/15/2024
+ms.date: 02/11/2026
+ms.update-cycle: 1095-days
+ms.custom:
+  - sfi-image-nochange
+  - sfi-ropc-nochange
 ---
 
 # Secure access and data for workflows in Azure Logic Apps
@@ -34,7 +38,7 @@ For more information about security in Azure, review these topics:
 
 ## Access to logic app operations
 
-For Consumption logic apps only, before you can create or manage logic apps and their connections, you need specific permissions, which are provided through roles using [Azure role-based access control (Azure RBAC)](../role-based-access-control/role-assignments-portal.yml). You can also set up permissions so that only specific users or groups can run specific tasks, such as managing, editing, and viewing logic apps. To control their permissions, you can assign built-in or customized roles to members who have access to your Azure subscription. Azure Logic Apps has the following specific roles, based on whether you have a Consumption or Standard logic app workflow:
+For Consumption logic apps only, before you can create or manage logic apps and their connections, you need specific permissions, which are provided through roles using [Azure role-based access control (Azure RBAC)](/azure/role-based-access-control/role-assignments-portal). You can also set up permissions so that only specific users or groups can run specific tasks, such as managing, editing, and viewing logic apps. To control their permissions, you can assign built-in or customized roles to members who have access to your Azure subscription. Azure Logic Apps has the following specific roles, based on whether you have a Consumption or Standard logic app workflow:
 
 ##### Consumption workflows
 
@@ -671,7 +675,7 @@ In a Consumption workflow that starts with a request-based trigger, you can auth
 
 When your logic app workflow receives an inbound request that includes an OAuth access token, Azure Logic Apps compares the token's claims against the claims specified by each authorization policy. If a match exists between the token's claims and all the claims in at least one policy, authorization succeeds for the inbound request. The token can have more claims than the number specified by the authorization policy.
 
-In a Standard workflow that starts with the **Request** trigger (but not a webhook trigger), you can use the Azure Functions provision for authenticating inbound calls sent to the endpoint created by the **Request** trigger by using a managed identity. This provision is also known as "**Easy Auth**". For more information, see [Trigger workflows in Standard logic apps with Easy Auth](https://techcommunity.microsoft.com/t5/integrations-on-azure-blog/trigger-workflows-in-standard-logic-apps-with-easy-auth/ba-p/3207378).
+In a Standard workflow that starts with the **Request** trigger (but not a webhook trigger), you can use the Azure Functions provision for authenticating inbound calls sent to the endpoint created by the **Request** trigger by using a managed identity. This provision is also known as "**Easy Auth**". For more information, see [Trigger workflows in Standard logic apps with Easy Auth](https://techcommunity.microsoft.com/blog/integrationsonazureblog/trigger-workflows-in-standard-logic-apps-with-easy-auth/3207378).
 
 <a name="considerations-before-you-enable-azure-ad-oauth"></a>
 
@@ -779,7 +783,7 @@ To add an authorization policy to your Consumption logic app, follow the steps f
 
 #### [Portal](#tab/azure-portal)
 
-1. In the [Azure portal](https://portal.microsoft.com), open your Consumption logic app and workflow in the designer.
+1. In the [Azure portal](https://portal.azure.com), open your Consumption logic app and workflow in the designer.
 
 1. On the logic app menu, under **Settings**, select **Authorization**.
 
@@ -1376,7 +1380,7 @@ In your ARM template, specify the allowed inbound IP address ranges in your logi
 
 ## Access for outbound calls to other services and systems
 
-Based on the target endpoint's capability, outbound calls sent by the [HTTP trigger or HTTP action](../connectors/connectors-native-http.md), support encryption and are secured with [Transport Layer Security (TLS) 1.0, 1.1, or 1.2](https://en.wikipedia.org/wiki/Transport_Layer_Security), previously known as Secure Sockets Layer (SSL). Azure Logic Apps negotiates with the target endpoint over using the highest possible version that's supported. For example, if the target endpoint supports 1.2, the HTTP trigger or action uses 1.2 first. Otherwise, the connector uses the next highest supported version.
+Based on the target endpoint's capability, outbound calls sent by the [HTTP trigger or HTTP action](../connectors/connectors-native-http.md), support encryption and are secured with [Transport Layer Security (TLS) 1.0, 1.1, 1.2, or 1.3](https://en.wikipedia.org/wiki/Transport_Layer_Security), previously known as Secure Sockets Layer (SSL). Azure Logic Apps negotiates with the target endpoint over using the highest possible version that's supported. For example, if the target endpoint supports 1.3, the HTTP trigger or action uses 1.3 first. Otherwise, the connector uses the next highest supported version.
 
 This list includes information about TLS/SSL self-signed certificates:
 

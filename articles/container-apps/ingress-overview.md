@@ -7,7 +7,7 @@ ms.service: azure-container-apps
 ms.custom:
   - ignite-2024
   - build-2025
-ms.topic: conceptual
+ms.topic: concept-article
 ms.date: 05/02/2025
 ms.author: cshoe
 ---
@@ -36,8 +36,9 @@ For configuration details, see [Configure ingress](ingress-how-to.md).
 
 When you enable ingress, you can choose between two types of ingress:
 
-- External: Accepts traffic from both the public internet and your container app's internal environment.
-- Internal: Allows only internal access from within your container app's environment.
+- **External**: Exposes the app through the Container Apps environment's inbound IP address. If the environment uses a public inbound IP, the app can receive traffic from the public internet, and it's also reachable from other container apps in the same environment.
+
+- **Internal**: Makes the app reachable only from within the same Container Apps environment, such as from other container apps. The app isn't directly accessible from the public internet.
 
 Each container app within an environment can be configured with different ingress settings. For example, in a scenario with multiple microservice apps, to increase security you might have a single container app that receives public requests and passes the requests to a background service. In this scenario, you would configure the public-facing container app with external ingress and the internal-facing container app with internal ingress.
 
@@ -64,10 +65,9 @@ HTTP ingress adds headers to pass metadata about the client request to your cont
 
 | Header | Description | Values |
 |---|---|---|
-| `X-Forwarded-Proto` | Protocol used by the client to connect with the Container Apps service. | `http` or `https` |
-| `X-Forwarded-For` | The IP address of the client that sent the request. | IP address of the sender. If specified in initial request, it is overwritten. |
-| `X-Forwarded-Host` | The host name the client used to connect with the Container Apps service. |  |
-| `X-Forwarded-Client-Cert` | The client certificate if `clientCertificateMode` is set. | Semicolon separated list of Hash, Cert, and Chain. For example: `Hash=....;Cert="...";Chain="...";` |
+| `X-Forwarded-Proto` | Protocol used by the client to connect with the Container Apps service. | `http` or `https`. This value is overwritten if sent by the client. |
+| `X-Forwarded-For` | The IP addresses of the client and/or intermediate proxies that sent the request. | IP addresses of the senders. If specified in initial request, it is appended to. Only the rightmost IP is provided by Azure Container Apps. Any other values must be validated by the user to prevent IP spoofing. |
+| `X-Forwarded-Client-Cert` | The client certificate if `clientCertificateMode` is set. | Semicolon separated list of Hash, Cert, and Chain. For example: `Hash=....;Cert="...";Chain="...";`. This value is overwritten if sent by the client. |
 
 ### <a name="tcp"></a>TCP
 
@@ -102,7 +102,7 @@ The following apply to additional TCP ports:
 
 - Only the main ingress port supports built-in HTTP features such as CORS and session affinity. When running HTTP on top of the extra TCP ports, these built-in features aren't supported.
 
-- Port number `36985` is a reserved for internal health checks and isn't available to TCP applications or extra exposed ports on HTTP applications.
+- Port number `36985` is reserved for internal health checks and isn't available to TCP applications or extra exposed ports on HTTP applications.
 
 For more information on how to enable extra ports, see [Configure ingress for your app](ingress-how-to.md#use-additional-tcp-ports).
 
@@ -116,7 +116,7 @@ You can access your app in the following ways:
 
 - The app name: You can use the app name for communication between apps in the same environment.
 
-To get the FQDN for your app, see [Location](connect-apps.md#location).
+To get the FQDN for your app, see [Container app location (FQDN)](connect-apps.md#container-app-location-fqdn).
 
 ## IP restrictions
 

@@ -30,7 +30,7 @@ In this tutorial, you learn how to:
 ## Prerequisites
 
 - An Azure account with an active subscription.
-  - [Create an account for free](https://azure.microsoft.com/free/?WT.mc_id=A261C142F).
+  - [Create an account for free](https://azure.microsoft.com/pricing/purchase-options/azure-account?cid=msft_learn).
 - Owner permissions on the Azure subscription.
 - An Azure DevOps subscription.
   - [Create an account for free](https://azure.microsoft.com/services/devops/?WT.mc_id=A261C142F).
@@ -190,7 +190,7 @@ When you're done with the resources you created in this tutorial, you can delete
 Use the following command to delete the environment you created in this tutorial:
 
 ```azurecli
-az devcenter dev environment delete --dev-center <DevCenterName> --project-name <DevCenterProjectName> --name <DeploymentEnvironmentInstanceToCreateName> --yes
+az devcenter dev environment delete --dev-center-name <DevCenterName> --project-name <DevCenterProjectName> --name <DeploymentEnvironmentInstanceToCreateName> --yes
 ```
 
 ## Related content

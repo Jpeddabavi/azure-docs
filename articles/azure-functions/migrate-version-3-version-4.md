@@ -2,18 +2,29 @@
 title: Migrate apps from Azure Functions version 3.x to 4.x
 description: Learn how to migrate your existing function apps running on version 3.x of the Azure Functions runtime to be able to run on version 4.x of the runtime.
 ms.service: azure-functions
-ms.custom: devx-track-dotnet, devx-track-extended-java, devx-track-js, devx-track-python, devx-track-azurecli, ignite-2023, linux-related-content, devx-track-ts
 ms.topic: how-to
-ms.date: 05/08/2025
+ms.date: 09/30/2025
 zone_pivot_groups: programming-languages-set-functions
+ms.custom:
+  - devx-track-dotnet
+  - devx-track-extended-java
+  - devx-track-js
+  - devx-track-python
+  - devx-track-azurecli
+  - ignite-2023
+  - linux-related-content
+  - devx-track-ts
+  - sfi-ropc-nochange
 ---
 
 # Migrate apps from Azure Functions version 3.x to version 4.x 
 
-Azure Functions version 4.x is highly backwards compatible to version 3.x. Most apps should safely migrate to 4.x without requiring significant code changes. For more information about Functions runtime versions, see [Azure Functions runtime versions overview](./functions-versions.md).
-
 > [!IMPORTANT]
 > As of December 13, 2022, function apps running on versions 2.x and 3.x of the Azure Functions runtime have reached the end of extended support. For more information, see [Retired versions](functions-versions.md#retired-versions).
+
+Azure Functions version 4.x is highly backwards compatible to version 3.x. Most apps should safely migrate to 4.x without requiring significant code changes. For more information about Functions runtime versions, see [Azure Functions runtime versions overview](./functions-versions.md).
+
+[!INCLUDE [functions-linux-consumption-retirement](../../includes/functions-linux-consumption-retirement.md)]
 
 This article walks you through the process of safely migrating your function app to run on version 4.x of the Functions runtime. Because project migration instructions are language dependent, make sure to choose your development language from the selector at the top of the article.
 
@@ -36,7 +47,7 @@ On version 3.x of the Functions runtime, your C# function app targets .NET Core 
 >
 > Although you can choose to instead use the in-process model, we don't recommend this approach if you can avoid it. [Support will end for the in-process model on November 10, 2026](https://aka.ms/azure-functions-retirements/in-process-model), so you'll need to move to the isolated worker model before then. Doing so while migrating to version 4.x will decrease the total effort required, and the isolated worker model will give your app [additional benefits](./dotnet-isolated-in-process-differences.md), including the ability to more easily target future versions of .NET. If you're moving to the isolated worker model, the [.NET Upgrade Assistant] can also handle many of the necessary code changes for you.
 
-This guide doesn't present specific examples for .NET 9. If you need to target that version, you can adapt the .NET 8 examples for the isolated worker model.
+This guide doesn't present specific examples for .NET 10 (preview) or .NET 9. If you need to target one of those versions, you can adapt the .NET 8 examples.
 
 ::: zone-end
 
@@ -444,7 +455,7 @@ To update your project to Azure Functions 4.x:
 
 ::: zone pivot="programming-language-python"
 
-1. If you're using Python 3.6, move to one of the [supported versions](functions-reference-python.md#python-version).
+1. If you're using Python 3.6, move to one of the [supported versions](functions-reference-python.md#supported-python-versions).
 
 ::: zone-end
 
@@ -470,7 +481,7 @@ If you don't see your programming language, go select it from the [top of the pa
 
 ### Runtime
 
-- Azure Functions Proxies is a legacy feature for versions 1.x through 3.x of the Azure Functions runtime. Support for Functions Proxies can be re-enabled in version 4.x so that you can successfully update your function apps to the latest runtime version. As soon as possible, you should instead switch to integrating your function apps with Azure API Management. API Management lets you take advantage of a more complete set of features for defining, securing, managing, and monetizing your Functions-based APIs. For more information, see [API Management integration](functions-proxies.md#api-management-integration). To learn how to re-enable Proxies support in Functions version 4.x, see [Re-enable Proxies in Functions v4.x](legacy-proxies.md#re-enable-proxies-in-functions-v4x).  
+- Azure Functions Proxies was a feature in versions 1.x through 3.x of the Azure Functions runtime. This feature isn't supported in version 4.x. For more information, see [Serverless REST APIs using Azure Functions](functions-proxies.md).  
 
 - Logging to Azure Storage using *AzureWebJobsDashboard* is no longer supported in 4.x. You should instead use [Application Insights](./functions-monitoring.md). ([#1923](https://github.com/Azure/Azure-Functions/issues/1923))
 

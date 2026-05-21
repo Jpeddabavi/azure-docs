@@ -7,6 +7,7 @@ ms.service: azure-app-configuration
 ms.topic: reference
 ms.date: 04/12/2023
 ms.author: junbchen
+ms.custom: sfi-ropc-nochange
 #Customer intent: As an Azure Kubernetes Service user, I want to manage all my app settings in one place using Azure App Configuration.
 ---
 
@@ -73,6 +74,7 @@ If the `spec.configuration.selectors` property isn't set, all key-values with no
 |---|---|---|---|
 |keyFilter|The key filter for querying key-values. This property and the `snapshotName` property should not be set at the same time.|alternative|string|
 |labelFilter|The label filter for querying key-values. This property and the `snapshotName` property should not be set at the same time.|false|string|
+|tagFilters|The tag filters for querying key-values. This property and the `snapshotName` property should not be set at the same time. Tag filter must be formatted as `tag1=value1`.|false|string array|
 |snapshotName|The name of a snapshot from which key-values are loaded. This property should not be used in conjunction with other properties.|alternative|string|
 
 The `spec.configuration.refresh` property has the following child properties.
@@ -151,6 +153,7 @@ If the `spec.featureFlag.selectors` property isn't set, feature flags are not do
 |---|---|---|---|
 |keyFilter|The key filter for querying feature flags. This property and the `snapshotName` property should not be set at the same time.|alternative|string|
 |labelFilter|The label filter for querying feature flags. This property and the `snapshotName` property should not be set at the same time.|false|string|
+|tagFilters|The tag filters for querying feature flags. This property and the `snapshotName` property should not be set at the same time. Tag filter must be formatted as `tag1=value1`.|false|string array|
 |snapshotName|The name of a snapshot from which feature flags are loaded. This property should not be used in conjunction with other properties.|alternative|string|
 
 The `spec.featureFlag.refresh` property has the following child properties.
@@ -355,6 +358,24 @@ spec:
         labelFilter: development
 ```
 
+Tag filters can also be used to filter key-values. In the following sample, only key-values with the tag `env=prod` are downloaded.
+
+``` yaml
+apiVersion: azconfig.io/v1
+kind: AzureAppConfigurationProvider
+metadata:
+  name: appconfigurationprovider-sample
+spec:
+  endpoint: <your-app-configuration-store-endpoint>
+  target:
+    configMapName: configmap-created-by-appconfig-provider
+  configuration:
+    selectors:
+      - keyFilter: '*'
+        tagFilters:
+          - env=prod
+``` 
+
 A snapshot can be used alone or together with other key-value selectors. In the following sample, you load key-values of common configuration from a snapshot and then override some of them with key-values for development.
 
 ``` yaml
@@ -411,6 +432,15 @@ spec:
       enabled: true
       interval: 1m
 ```
+
+### Snapshot reference
+
+A snapshot reference is a configuration setting that references a snapshot in the same App Configuration store. When loaded, the provider resolves it and adds all key-values from that snapshot. Using snapshot references enables switching between snapshots at runtime, unlike adding a snapshot selector, which requires code changes and/or restarts to switch to a new snapshot.
+
+For more information about creating a snapshot reference, go to [snapshot reference concept](./concept-snapshot-references.md).
+
+> [!NOTE] 
+> To use snapshot references, use the version *2.6.0* or later of Azure App Configuration Kubernetes provider.
 
 ### Key Vault references
 

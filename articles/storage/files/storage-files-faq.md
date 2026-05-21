@@ -4,10 +4,10 @@ description: Get answers to frequently asked questions (FAQ) about Azure Files a
 author: khdownie
 ms.service: azure-file-storage
 ms.custom: linux-related-content
-ms.date: 03/28/2025
+ms.date: 09/30/2025
 ms.author: kendownie
 ms.topic: faq
-# Customer intent: As a cloud storage administrator, I want to understand the configuration and synchronization capabilities of Azure Files and Azure File Sync, so that I can effectively manage file shares and ensure data consistency across multiple platforms.
+# Customer intent: As a cloud storage administrator, I want to understand the capabilities of Azure Files and Azure File Sync, so that I can effectively manage file shares and ensure data consistency across multiple platforms.
 ---
 
 # Frequently asked questions (FAQ) about Azure Files and Azure File Sync
@@ -50,11 +50,32 @@ ms.topic: faq
 
 * <a id="afs-tiered-files-not-showing-thumbnails"></a>
   **Why are my tiered files not showing thumbnails or previews in Windows File Explorer?**  
-    For tiered files, thumbnails and previews won't be visible at your server endpoint. This is expected behavior because the thumbnail cache feature in Windows intentionally skips reading files with the offline attribute. With Cloud Tiering enabled, reading through tiered files would cause them to be downloaded (recalled).
+    For tiered files, thumbnails and previews won't be visible at your server endpoint. This is expected behavior because the thumbnail cache feature in Windows intentionally skips reading files with the offline attribute. With Cloud Tiering enabled, reading through tiered files would cause them to be downloaded (recalled). However, you can configure Azure File Sync to [skip setting the offline attribute](#afs-tiered-files-skip-offline-attribute).
 
-    This behavior isn't specific to Azure File Sync. Windows File Explorer displays a "grey X" for any files that have the offline attribute set. You'll see the X icon when accessing files over SMB. For a detailed explanation of this behavior, refer to [Why don't I get thumbnails for files that are marked offline?](https://devblogs.microsoft.com/oldnewthing/20170503-00/?p=96105)
+    This behavior isn't specific to Azure File Sync. Windows File Explorer displays a "grey X" for any files that have the offline attribute set. You'll see the X icon when accessing files over SMB. For a detailed explanation of this behavior, see [Why don't I get thumbnails for files that are marked offline?](https://devblogs.microsoft.com/oldnewthing/20170503-00/?p=96105)
 
     For questions on how to manage tiered files, see [How to manage tiered files](../file-sync/file-sync-how-to-manage-tiered-files.md).
+
+* <a id="afs-tiered-files-skip-offline-attribute"></a>
+  **Is there an option to skip the offline attribute for tiered files?**
+
+    If you prefer to make thumbnails and previews visible for tiered files, you can configure Azure File Sync to skip setting the offline attribute.
+
+    1. Add the following registry key on the server:
+
+       ```cmd
+       reg ADD "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Azure\StorageSync" /v SkipOfflineAttributeOnTieredFile /t REG_DWORD /d 1 /f
+       ```
+
+    1. Restart the **FileSyncSvc** service.
+
+    Once configured:
+
+    - New tiered files will no longer have the offline attribute.
+    - Existing tiered files will be updated in the next maintenance run (occurs every 24 hours).
+
+    > [!NOTE]  
+    > This setting is applied globally across all files, not to specific extensions. Without the offline attribute, Windows File Explorer shows a different icon. You can add the **Attributes** column in File Explorer to identify tiered files (attributes `ALM`). Based on usage patterns, skipping the offline attribute might increase file recalls, so you should monitor recall activity and ensure egress costs remain within an acceptable range. See [How to manage tiered files](../file-sync/file-sync-how-to-manage-tiered-files.md).
 
 * <a id="afs-tiered-files-out-of-endpoint"></a>
   **Why do tiered files exist outside of the server endpoint namespace?**  
@@ -175,12 +196,12 @@ Alternate data streams are preserved on-premises when Azure File Sync is used.
 
     Azure Files on-premises AD DS authentication only integrates with the forest of the domain service that the storage account is registered to. To support authentication from another forest, your environment must have a forest trust configured correctly. For detailed instructions, see [Use Azure Files with multiple Active Directory forests](storage-files-identity-multiple-forests.md).
 
-   > [!Note]  
-   > In a multi-forest setup, don't use File Explorer to configure Windows ACLs/NTFS permissions at the root, directory, or file level. [Use icacls](storage-files-identity-configure-file-level-permissions.md#configure-windows-acls-with-icacls) instead.
+   > [!NOTE]  
+   > In a multi-forest setup, don't use File Explorer to configure Windows ACLs/NTFS permissions at the root, directory, or file level. [Use icacls](storage-files-identity-configure-file-level-permissions.md#configure-windows-acls-by-using-icacls) instead.
 
    
 * <a id="ad-aad-smb-files"></a>
-**Is there any difference in creating a computer account or service logon account to represent my storage account in AD?**
+**Is there any difference in creating a computer account or service logon account to represent my storage account in Active Directory?**
 
     Creating either a [computer account](/windows/security/identity-protection/access-control/active-directory-accounts#manage-default-local-accounts-in-active-directory) (default) or a [service logon account](/windows/win32/ad/about-service-logon-accounts) has no difference on how authentication works with Azure Files. You can make your own choice on how to represent a storage account as an identity in your AD environment. The default DomainAccountType set in `Join-AzStorageAccountForAuth` cmdlet is computer account. However, the password expiration age configured in your AD environment can be different for computer or service logon accounts, and you need to take that into consideration to [Update the password of your storage account identity in AD](./storage-files-identity-ad-ds-update-password.md).
 
@@ -255,6 +276,10 @@ Alternate data streams are preserved on-premises when Azure File Sync is used.
     Protocol transactions occur any time a user, application, script, or service interacts with Azure file shares (writing, reading, listing, deleting files, etc.). It's important to remember that some actions that you might perceive as a single operation might actually involve multiple transactions. For pay-as-you-go file shares, different types of transactions have different prices based on their impact on the file share. Transactions don't affect billing for provisioned file shares. For more information, see [Understanding billing](understanding-billing.md).
 
 ## Interoperability with other services
+
+* <a id="azure-files-versus-azure-netapp-files"></a>
+**What's the difference between Azure Files and Azure NetApp Files?**  
+    Azure Files and Azure NetApp Files are different file storage services in Azure, and they're designed for different workloads and performance requirements. Azure Files provides serverless SMB and NFS file shares, and offers Azure File Sync as an option for caching SMB file shares on Windows Server. Azure NetApp Files is a high-performance, bare-metal file storage service powered by NetApp technology that supports NFS, SMB, and dual-protocol file shares. For more information, see [Compare Azure Files and Azure NetApp Files](storage-files-netapp-comparison.md).
 
 * <a id="cluster-witness"></a>
 **Can I use my Azure file share as a *File Share Witness* for my Windows Server Failover Cluster?**  

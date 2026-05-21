@@ -1,20 +1,19 @@
 ---
 title: Configure MQTT data flow endpoints in Azure IoT Operations
 description: Learn how to configure data flow endpoints for MQTT sources and destinations.
-author: PatAltimore
-ms.author: patricka
+author: dominicbetts
+ms.author: dobett
 ms.service: azure-iot-operations
 ms.subservice: azure-data-flows
 ms.topic: how-to
 ms.date: 06/13/2025
 ai-usage: ai-assisted
+ms.custom: sfi-image-nochange
 
 #CustomerIntent: As an operator, I want to understand how to understand how to configure data flow endpoints for MQTT sources and destinations in Azure IoT Operations so that I can send data to and from MQTT brokers.
 ---
 
 # Configure MQTT data flow endpoints
-
-[!INCLUDE [kubernetes-management-preview-note](../includes/kubernetes-management-preview-note.md)]
 
 MQTT data flow endpoints are used for MQTT sources and destinations. You can configure the endpoint settings, Transport Layer Security (TLS), authentication, and other settings.
 
@@ -135,7 +134,9 @@ Then, deploy via Azure CLI.
 az deployment group create --resource-group <RESOURCE_GROUP> --template-file <FILE>.bicep
 ```
 
-# [Kubernetes (preview)](#tab/kubernetes)
+# [Kubernetes (debug only)](#tab/kubernetes)
+
+[!INCLUDE [kubernetes-debug-only-note](../includes/kubernetes-debug-only-note.md)]
 
 You can view the default MQTT broker endpoint settings in the Kubernetes cluster. To view the settings, use the following command:
 
@@ -265,7 +266,9 @@ resource MqttBrokerDataflowEndpoint 'Microsoft.IoTOperations/instances/dataflowE
 }
 ```
 
-# [Kubernetes (preview)](#tab/kubernetes)
+# [Kubernetes (debug only)](#tab/kubernetes)
+
+[!INCLUDE [kubernetes-debug-only-note](../includes/kubernetes-debug-only-note.md)]
 
 ```yaml
 apiVersion: connectivity.iotoperations.azure.com/v1
@@ -449,7 +452,9 @@ Then, deploy via Azure CLI.
 az deployment group create --resource-group <RESOURCE_GROUP> --template-file <FILE>.bicep
 ```
 
-# [Kubernetes (preview)](#tab/kubernetes)
+# [Kubernetes (debug only)](#tab/kubernetes)
+
+[!INCLUDE [kubernetes-debug-only-note](../includes/kubernetes-debug-only-note.md)]
 
 Create a Kubernetes manifest `.yaml` file with the following content.
 
@@ -495,7 +500,7 @@ Then, follow the steps in [X.509 certificate](#x509-certificate) to configure th
 
 ### Event Grid shared subscription limitation
 
-Azure Event Grid MQTT broker [doesn't support shared subscriptions](../../event-grid/mqtt-support.md#mqttv5-current-limitations), which means that you can't set the `instanceCount` to more than `1` in the data flow profile if Event Grid is used as a source (where the data flow subscribes to messages) for a data flow. In this case, if you set `instanceCount` greater than `1`, the data flow fails to start.
+Azure Event Grid MQTT broker [doesn't support shared subscriptions](../../event-grid/mqtt-support.md#mqtt-v5-current-limitations), which means that you can't set the `instanceCount` to more than `1` in the data flow profile if Event Grid is used as a source (where the data flow subscribes to messages) for a data flow. In this case, if you set `instanceCount` greater than `1`, the data flow fails to start.
 
 ## Custom MQTT brokers
 
@@ -591,7 +596,9 @@ mqttSettings: {
 }
 ```
 
-# [Kubernetes (preview)](#tab/kubernetes)
+# [Kubernetes (debug only)](#tab/kubernetes)
+
+[!INCLUDE [kubernetes-debug-only-note](../includes/kubernetes-debug-only-note.md)]
 
 ```yaml
 spec:
@@ -673,7 +680,9 @@ mqttSettings: {
 }
 ```
 
-# [Kubernetes (preview)](#tab/kubernetes)
+# [Kubernetes (debug only)](#tab/kubernetes)
+
+[!INCLUDE [kubernetes-debug-only-note](../includes/kubernetes-debug-only-note.md)]
 
 ```yaml
 mqttSettings:
@@ -751,7 +760,9 @@ mqttSettings: {
 }
 ```
 
-# [Kubernetes (preview)](#tab/kubernetes)
+# [Kubernetes (debug only)](#tab/kubernetes)
+
+[!INCLUDE [kubernetes-debug-only-note](../includes/kubernetes-debug-only-note.md)]
 
 ```yaml
 mqttSettings:
@@ -819,7 +830,9 @@ mqttSettings: {
 }
 ```
 
-# [Kubernetes (preview)](#tab/kubernetes)
+# [Kubernetes (debug only)](#tab/kubernetes)
+
+[!INCLUDE [kubernetes-debug-only-note](../includes/kubernetes-debug-only-note.md)]
 
 ```yaml
 mqttSettings:
@@ -920,7 +933,9 @@ mqttSettings: {
 }
 ```
 
-# [Kubernetes (preview)](#tab/kubernetes)
+# [Kubernetes (debug only)](#tab/kubernetes)
+
+[!INCLUDE [kubernetes-debug-only-note](../includes/kubernetes-debug-only-note.md)]
 
 ```yaml
 mqttSettings:
@@ -977,7 +992,9 @@ mqttSettings: {
 }
 ```
 
-# [Kubernetes (preview)](#tab/kubernetes)
+# [Kubernetes (debug only)](#tab/kubernetes)
+
+[!INCLUDE [kubernetes-debug-only-note](../includes/kubernetes-debug-only-note.md)]
 
 ```yaml
 mqttSettings:
@@ -1033,7 +1050,9 @@ mqttSettings: {
 }
 ```
 
-# [Kubernetes (preview)](#tab/kubernetes)
+# [Kubernetes (debug only)](#tab/kubernetes)
+
+[!INCLUDE [kubernetes-debug-only-note](../includes/kubernetes-debug-only-note.md)]
 
 ```yaml
 # See sections below for explanation of each setting
@@ -1083,7 +1102,9 @@ mqttSettings: {
 }
 ```
 
-# [Kubernetes (preview)](#tab/kubernetes)
+# [Kubernetes (debug only)](#tab/kubernetes)
+
+[!INCLUDE [kubernetes-debug-only-note](../includes/kubernetes-debug-only-note.md)]
 
 ```yaml
 mqttSettings:
@@ -1124,7 +1145,9 @@ mqttSettings: {
     }
 }
 ```
-# [Kubernetes (preview)](#tab/kubernetes)
+# [Kubernetes (debug only)](#tab/kubernetes)
+
+[!INCLUDE [kubernetes-debug-only-note](../includes/kubernetes-debug-only-note.md)]
 
 ```yaml
 mqttSettings:
@@ -1174,7 +1197,9 @@ mqttSettings: {
 }
 ```
 
-# [Kubernetes (preview)](#tab/kubernetes)
+# [Kubernetes (debug only)](#tab/kubernetes)
+
+[!INCLUDE [kubernetes-debug-only-note](../includes/kubernetes-debug-only-note.md)]
 
 ```yaml
 mqttSettings:
@@ -1208,7 +1233,9 @@ mqttSettings: {
 }
 ```
 
-# [Kubernetes (preview)](#tab/kubernetes)
+# [Kubernetes (debug only)](#tab/kubernetes)
+
+[!INCLUDE [kubernetes-debug-only-note](../includes/kubernetes-debug-only-note.md)]
 
 ```yaml
 mqttSettings:
@@ -1248,7 +1275,9 @@ mqttSettings: {
 }
 ```
 
-# [Kubernetes (preview)](#tab/kubernetes)
+# [Kubernetes (debug only)](#tab/kubernetes)
+
+[!INCLUDE [kubernetes-debug-only-note](../includes/kubernetes-debug-only-note.md)]
 
 ```yaml
 mqttSettings:
@@ -1260,7 +1289,7 @@ mqttSettings:
 The *retain* setting only takes effect if the data flow uses MQTT endpoint as both source and destination. For example, in an [MQTT bridge](tutorial-mqtt-bridge.md) scenario.
 
 > [!IMPORTANT]
-> Azure Event Grid MQTT broker [currently doesn't support the retain flag](../../event-grid/mqtt-support.md#mqttv5-current-limitations). This means if you set the retain flag to `Keep` for an Event Grid MQTT broker endpoint and it's being used as a destination, the messages are rejected. To avoid this, set the retain flag to `Never` when using Event Grid MQTT broker as a destination.
+> Azure Event Grid MQTT broker [currently doesn't support the retain flag](../../event-grid/mqtt-support.md#mqtt-v5-current-limitations). This means if you set the retain flag to `Keep` for an Event Grid MQTT broker endpoint and it's being used as a destination, the messages are rejected. To avoid this, set the retain flag to `Never` when using Event Grid MQTT broker as a destination.
 
 ### Session expiry
 
@@ -1288,7 +1317,9 @@ mqttSettings: {
 }
 ```
 
-# [Kubernetes (preview)](#tab/kubernetes)
+# [Kubernetes (debug only)](#tab/kubernetes)
+
+[!INCLUDE [kubernetes-debug-only-note](../includes/kubernetes-debug-only-note.md)]
 
 ```yaml
 mqttSettings:
@@ -1326,7 +1357,9 @@ mqttSettings: {
 }
 ```
 
-# [Kubernetes (preview)](#tab/kubernetes)
+# [Kubernetes (debug only)](#tab/kubernetes)
+
+[!INCLUDE [kubernetes-debug-only-note](../includes/kubernetes-debug-only-note.md)]
 
 ```yaml
 mqttSettings:
@@ -1361,7 +1394,9 @@ mqttSettings: {
 }
 ```
 
-# [Kubernetes (preview)](#tab/kubernetes)
+# [Kubernetes (debug only)](#tab/kubernetes)
+
+[!INCLUDE [kubernetes-debug-only-note](../includes/kubernetes-debug-only-note.md)]
 
 ```yaml
 mqttSettings:
@@ -1398,7 +1433,9 @@ mqttSettings: {
 }
 ```
 
-# [Kubernetes (preview)](#tab/kubernetes)
+# [Kubernetes (debug only)](#tab/kubernetes)
+
+[!INCLUDE [kubernetes-debug-only-note](../includes/kubernetes-debug-only-note.md)]
 
 ```yaml
 mqttSettings:
@@ -1435,7 +1472,9 @@ mqttSettings: {
 }
 ```
 
-# [Kubernetes (preview)](#tab/kubernetes)
+# [Kubernetes (debug only)](#tab/kubernetes)
+
+[!INCLUDE [kubernetes-debug-only-note](../includes/kubernetes-debug-only-note.md)]
 
 ```yaml
 mqttSettings:

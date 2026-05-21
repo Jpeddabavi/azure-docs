@@ -4,11 +4,12 @@ description: Learn about virtual networks in Azure Container Apps.
 services: container-apps
 author: craigshoemaker
 ms.service: azure-container-apps
-ms.topic: conceptual
+ms.topic: concept-article
 ms.date: 06/25/2025
 ms.author: cshoe
 ms.custom:
   - build-2025
+  - sfi-image-nochange
 ---
 
 # Networking in Azure Container Apps environment
@@ -25,8 +26,8 @@ Container Apps has two different [environment types](environment.md#types), whic
 
 | Environment type | Supported plan types | Description | 
 |---|---|---|
-| Workload profiles | Consumption, Dedicated | Supports user defined routes (UDR), egress through NAT Gateway, and creating private endpoints on the container app environment. The minimum required subnet size is `/27`. | 
-| Consumption only | Consumption | Doesn't support user defined routes (UDR), egress through NAT Gateway, peering through a remote gateway, or other custom egress. The minimum required subnet size is `/23`. | 
+| Workload profiles (default) | Consumption, Dedicated | Supports user defined routes (UDR), egress through NAT Gateway, and creating private endpoints on the container app environment. The minimum required subnet size is `/27`. | 
+| Consumption only (legacy) | Consumption | Doesn't support user defined routes (UDR), egress through NAT Gateway, peering through a remote gateway, or other custom egress. The minimum required subnet size is `/23`. | 
 
 For more information see [Environment types](/azure/container-apps/structure#environment-types).
 
@@ -133,7 +134,7 @@ Azure Container Apps uses an edge HTTP proxy that terminates Transport Layer Sec
 
 HTTP applications scale based on the number of HTTP requests and connections. Envoy routes internal traffic inside clusters.
 
-Downstream connections support HTTP1.1 and HTTP2 and Envoy automatically detects and upgrades connections if the client connection requires an upgrade.
+Downstream connections support HTTP/1.1 and HTTP/2 and Envoy automatically detects and upgrades connections if the client connection requires an upgrade.
 
 Upstream connections are defined by setting the `transport` property on the [ingress](azure-resource-manager-api-spec.md#propertiesconfiguration) object.
 

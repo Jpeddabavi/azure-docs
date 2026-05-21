@@ -27,7 +27,7 @@ This article covers information about sharing access to Grafana dashboards with 
 
 ## Prerequisites
 
-- An Azure account with an active subscription. [Create an account for free](https://azure.microsoft.com/free).
+- An Azure account with an active subscription. [Create an account for free](https://azure.microsoft.com/pricing/purchase-options/azure-account?cid=msft_learn).
 - An Azure Managed Grafana workspace. If you don't have one yet, [create an Azure Managed Grafana workspace](./quickstart-managed-grafana-portal.md).
 
 ## Share access with team members
@@ -59,7 +59,7 @@ The Grafana portal provides several options to share access to Grafana dashboard
 > [!TIP] 
 > If you update a dashboard or a panel, ensure you save your changes before sharing it so that it contains your latest changes.
 
-For more information about the sharing methods presented below, refer to Grafana's [Share dashboards and panels documentation](https://grafana.com/docs/grafana/latest/dashboards/share-dashboards-panels).
+For more information about the sharing methods presented below, refer to Grafana's [Share dashboards and panels documentation](https://grafana.com/docs/grafana/latest/visualizations/dashboards/share-dashboards-panels/).
 
 ### Share a link
 

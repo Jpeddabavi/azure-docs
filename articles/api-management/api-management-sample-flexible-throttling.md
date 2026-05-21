@@ -5,7 +5,7 @@ services: api-management
 author: dlepow
 ms.service: azure-api-management
 ms.topic: concept-article
-ms.date: 05/15/2025
+ms.date: 05/01/2026
 ms.author: danlep
 
 #customer intent: As an API provider, I want to create and apply quota and rate limiting so that I can protect my APIs from abuse and/or create value for different API product tiers.
@@ -25,8 +25,32 @@ Rate limits and quotas are used for different purposes.
 
 Rate limits are usually used to protect against short and intense volume bursts. For example, if you know your backend service has a bottleneck at its database when call volumes are high, you can set a `rate-limit-by-key` policy to disallow high call volumes.
 
+For language model backends, you can set a `llm-token-limit` policy to limit the number of tokens processed per minute by your backend. This policy helps protect against sudden spikes in token usage that could lead to increased costs, deplete resources, or degrade performance.
+
 [!INCLUDE [api-management-rate-limit-accuracy](../../includes/api-management-rate-limit-accuracy.md)]
 
+#### Rate limits in classic versus v2 tiers
+
+API Management implements rate limiting differently depending on whether your instance is in one of the classic or v2 service tiers:
+ 
+* **Classic tiers** use a sliding window algorithm.
+
+* **V2 tiers** use a token bucket algorithm that is more efficient and aligns with rate limiting in [Azure Resource Manager](/azure/azure-resource-manager/management/request-limits-and-throttling#regional-throttling-and-token-bucket-algorithm).
+
+While the overall behavior of rate limiting is similar across API Management tiers, the differences in implementation affect some usage details of rate limiting policies such as `rate-limit-by-key` and `llm-token-limit`. 
+
+In the v2 tiers, the token bucket implementation uses an initial bucket size equal to the number of calls (or tokens) specified in the policies. For `rate-limit` policies this value is assigned to the `limit-call` attribute; for the `llm-token-limit` policy it is assigned to the `tokens-per-minute` attribute.
+
+The following example describes a scenario where the number of calls is set to 6 with a renewal-period of 60 seconds on the `rate-limit-by-key` policy.
+
+```xml 
+<rate-limit-by-key calls="6" renewal-period="60" counter-key="Counter1"/>
+```
+
+In this case, the bucket size is 6 calls, meaning that the gateway will allow an initial burst of 6 calls. After that, the bucket fills at a rate of 6 calls per 60 seconds, equivalent to 0.1 calls per second. 
+
+> [!IMPORTANT]
+> In the v2 tiers, all instances of rate limit policies across scopes using the same counter key must use the same renewal period and call limit values, otherwise policy instances will behave unpredictably.
 
 ### Quotas
 
@@ -95,7 +119,7 @@ This technique enables the developer's client application to determine how to cr
 
 ## Considerations for multiple regions or gateways
 
-Rate limiting policies like `rate-limit`, `rate-limit-by-key`, `azure-openai-token-limit`, and `llm-token-limit` use counters at the level of the API Management gateway. Therefore, in [multi-region deployments](api-management-howto-deploy-multi-region.md) of API Management, each regional gateway has a separate counter, and rate limits are enforced separately for each region. Similarly, in API Management instances with [workspaces](workspaces-overview.md), limits are enforced separately for each workspace gateway. 
+Rate limiting policies like `rate-limit`, `rate-limit-by-key`, and `llm-token-limit` use counters at the level of the API Management gateway. Therefore, in [multi-region deployments](api-management-howto-deploy-multi-region.md) of API Management, each regional gateway has a separate counter, and rate limits are enforced separately for each region. Similarly, in API Management instances with [workspaces](workspaces-overview.md), limits are enforced separately for each workspace gateway. 
 
 Quota policies like `quota` and `quota-by-key` are global, which means that a single counter is used at the level of the API Management instance. 
 

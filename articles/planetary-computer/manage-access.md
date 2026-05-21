@@ -1,8 +1,8 @@
 ---
 title: Managing User Access in Microsoft Planetary Computer Pro
 description: This article shows you how to manage role-based access control (RBAC) access to Microsoft Planetary Computer Pro.
-author: prasadko
-ms.author: prasadkomma
+author: jglixon
+ms.author: jglixon
 ms.service: planetary-computer-pro
 ms.topic: how-to
 ms.date: 04/09/2025
@@ -17,7 +17,7 @@ This article shows you how to manage identities in [Microsoft Entra ID](/entra/f
 
 ## Prerequisites
 
-- Azure account with an active subscription - [create an account for free](https://azure.microsoft.com/free/?ref=microsoft.com&utm_source=microsoft.com&utm_medium=docs&utm_campaign=visualstudio)
+- Azure account with an active subscription - [create an account for free](https://azure.microsoft.com/pricing/purchase-options/azure-account?cid=msft_learn)
 - An existing [GeoCatalog resource](./deploy-geocatalog-resource.md)
 
 ## Create and Manage Users

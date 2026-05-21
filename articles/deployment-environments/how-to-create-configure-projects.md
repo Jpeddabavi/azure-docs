@@ -22,7 +22,7 @@ A platform engineering team typically creates projects and provides project acce
 
 |Category|Requirement|
 |-|-|
-|**Subscription**|An Azure account with an active subscription. [Create an account for free](https://azure.microsoft.com/free/?WT.mc_id=A261C142F).|
+|**Subscription**|An Azure account with an active subscription. [Create an account for free](https://azure.microsoft.com/pricing/purchase-options/azure-account?cid=msft_learn).|
 |**Permissions**| Azure role-based access control role with permissions to create and manage resources in the subscription, such as [Contributor](../role-based-access-control/built-in-roles.md#contributor) or [Owner](../role-based-access-control/built-in-roles.md#owner).|
 |**Resource**|- A [dev center](how-to-create-configure-dev-center.md).|
 
@@ -94,10 +94,10 @@ In this quickstart, you assign the Owner role to the system-assigned managed ide
     Write-Output $SUBID
     ```
 
-1. Retrieve the object ID of the dev center's identity by using the name of the dev center resource:
+1. Retrieve the object ID of the dev center's system-assigned managed identity:
 
     ```azurecli
-    $OID = az ad sp list --display-name <devcenterName> --query [].id -o tsv
+    $OID = az devcenter admin devcenter show -n <devcenterName> --query identity.principalId -o tsv
     Write-Output $OID
     ```
 

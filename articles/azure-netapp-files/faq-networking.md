@@ -5,7 +5,7 @@ ms.service: azure-netapp-files
 ms.topic: concept-article
 author: b-hchen
 ms.author: anfdocs
-ms.date: 05/22/2024
+ms.date: 05/22/2025
 # Customer intent: As a network administrator, I want to understand the networking requirements and limitations of Azure NetApp Files, so that I can effectively integrate it with my existing Azure Virtual Networks and ensure optimal performance for my applications.
 ---
 # Networking FAQs for Azure NetApp Files
@@ -33,7 +33,7 @@ Yes, you can, if you create the required DNS entries. Azure NetApp Files supplie
 
 ## Can I set or select my own IP address for an Azure NetApp Files volume?  
 
-No. IP assignment to Azure NetApp Files volumes is dynamic. Static IP assignment isn't supported. 
+No. IP assignment of Azure NetApp Files volumes is automatic. Manual IP assignment isn't supported. 
 
 ## Does Azure NetApp Files support dual stack (IPv4 and IPv6) VNet?
 

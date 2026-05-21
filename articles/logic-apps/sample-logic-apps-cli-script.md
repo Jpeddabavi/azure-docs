@@ -20,7 +20,7 @@ This script creates a sample logic app through the [Azure CLI Logic Apps extensi
 
 ## Prerequisites
 
-* An Azure account with an active subscription. If you don't have an Azure subscription, [create a free account](https://azure.microsoft.com/free/?WT.mc_id=A261C142F).
+* An Azure account with an active subscription. If you don't have an Azure subscription, [create a free account](https://azure.microsoft.com/pricing/purchase-options/azure-account?cid=msft_learn).
 * The [Azure CLI](/cli/azure/install-azure-cli) installed on your local computer.
 * The [Logic Apps Azure CLI extension](/cli/azure/azure-cli-extensions-list) installed on your computer. To install this extension, use this command: `az extension add --name logic`
 * A [workflow definition](quickstart-logic-apps-azure-cli.md#workflow-definition) for your logic app. This JSON file must follow the [Workflow Definition language schema](logic-apps-workflow-definition-language.md).
@@ -115,14 +115,14 @@ Before you run the sample script, you must first create a sample [workflow defin
             "$connections": {
                 "value": {
                     "office365": {
-                        "connectionId": "/subscriptions/aaaa0a0a-bb1b-cc2c-dd3d-eeeeee4e4e4e/resourceGroups/testResourceGroup/providers/Microsoft.Web/connections/office365",
+                        "connectionId": "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/testResourceGroup/providers/Microsoft.Web/connections/office365",
                         "connectionName": "office365",
-                        "id": "/subscriptions/aaaa0a0a-bb1b-cc2c-dd3d-eeeeee4e4e4e/providers/Microsoft.Web/locations/westus/managedApis/office365"
+                        "id": "/subscriptions/00000000-0000-0000-0000-000000000000/providers/Microsoft.Web/locations/westus/managedApis/office365"
                     },
                     "rss": {
-                        "connectionId": "/subscriptions/aaaa0a0a-bb1b-cc2c-dd3d-eeeeee4e4e4e/resourceGroups/testResourceGroup/providers/Microsoft.Web/connections/rss",
+                        "connectionId": "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/testResourceGroup/providers/Microsoft.Web/connections/rss",
                         "connectionName": "rss",
-                        "id": "/subscriptions/aaaa0a0a-bb1b-cc2c-dd3d-eeeeee4e4e4e/providers/Microsoft.Web/locations/westus/managedApis/rss"
+                        "id": "/subscriptions/00000000-0000-0000-0000-000000000000/providers/Microsoft.Web/locations/westus/managedApis/rss"
                     }
                 }
             }
@@ -196,7 +196,7 @@ This sample script uses the following commands to create a new resource group an
 | ------- | ----- |
 | [`az group create`](/cli/azure/group#az-group-create) | Creates a resource group in which your logic app's resources are stored. |
 | [`az logic workflow create`](/cli/azure/logic/workflow#az-logic-workflow-create) | Creates a logic app based on the workflow defined in the parameter `--definition`. |
-| [`az group delete`](/cli/azure/vm/extension) | Deletes a resource group and all of its nested resources. |
+| [`az group delete`](/cli/azure/group#az-group-delete) | Deletes a resource group and all of its nested resources. |
 
 ## Next steps
 

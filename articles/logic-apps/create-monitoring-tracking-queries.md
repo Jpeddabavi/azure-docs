@@ -16,11 +16,11 @@ ms.date: 07/16/2025
 > This article applies only to Consumption logic apps. For information about monitoring Standard logic apps, review 
 > [Enable or open Application Insights after deployment for Standard logic apps](create-single-tenant-workflows-azure-portal.md#enable-open-application-insights).
 
-You can view the underlying queries that produce the results from [Azure Monitor logs](/azure/azure-monitor/logs/log-query-overview) and create queries that filter the results based your specific criteria. For example, you can find messages based on a specific interchange control number. Queries use the [Kusto query language](/azure/data-explorer/kusto/query/), which you can edit if you want to view different results. For more information, see [Azure Monitor log queries](/azure/data-explorer/kusto/query/).
+You can view the underlying queries that produce the results from [Azure Monitor logs](/azure/azure-monitor/logs/log-query-overview) and create queries that filter the results based on your specific criteria. For example, you can find messages based on a specific interchange control number. Queries use the [Kusto query language](/azure/data-explorer/kusto/query/), which you can edit if you want to view different results. For more information, see [Azure Monitor log queries](/azure/data-explorer/kusto/query/).
 
 ## Prerequisites
 
-* An Azure account and subscription. If you don't have a subscription, [sign up for a free Azure account](https://azure.microsoft.com/free/?WT.mc_id=A261C142F).
+* An Azure account and subscription. If you don't have a subscription, [sign up for a free Azure account](https://azure.microsoft.com/pricing/purchase-options/azure-account?cid=msft_learn).
 
 * A Log Analytics workspace. If you don't have a Log Analytics workspace, learn [how to create a Log Analytics workspace](/azure/azure-monitor/logs/quick-create-workspace).
 

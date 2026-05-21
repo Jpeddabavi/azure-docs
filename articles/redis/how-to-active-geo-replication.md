@@ -2,8 +2,7 @@
 title: Configure active geo-replication for Azure Managed Redis instances
 description: Learn how to replicate your Azure Managed Redis instances across Azure regions.
 ms.date: 05/18/2025
-ms.service: azure-managed-redis
-ms.topic: conceptual
+ms.topic: how-to
 ms.custom:
   - devx-track-azurecli
   - ignite-2024
@@ -19,7 +18,10 @@ In this article, you learn how to configure an active geo-replicated cache using
 Active geo-replication groups up to five instances of Azure Managed Redis into a single cache that spans across Azure regions. All instances act as the local, primary caches. An application decides which instance or instances to use for read and write requests.
 
 > [!NOTE]
-> Data transfer between Azure regions is charged at standard [bandwidth rates](https://azure.microsoft.com/pricing/details/bandwidth/).
+> * Using active geo-replication produces data transfer between Azure regions. These bandwidth charges are currently absorbed by Azure Managed Redis and not passed on to customers.
+> Billing can change in the future. For more information, see [bandwidth rates](https://azure.microsoft.com/pricing/details/bandwidth/).
+>
+> * Data sync among replicas follows eventual consistency. The service does not provide SLA on sync time. Please design your system without relying on the timeliness of data sync.
 >
 
 ## How active geo-replication works
@@ -38,10 +40,10 @@ For a more detailed breakdown of how active geo-replication works, see [Active-A
 
 |Tier      | Memory Optimized, Balanced, Compute Optimized  | Flash Optimized  |
 |--------- |:------------------:|:----------:|
-|Available | Yes (except B0 and B1)        | Yes       |
+|Available | Yes (except B0 and B1)        | No       |
 
 > [!IMPORTANT]
-> The Balanced B0 and B1 SKUs don't support active geo-replication.
+> The Balanced B0 and B1 SKUs & Flash Optimized SKUs don't support active geo-replication.
 >
 
 ## Active geo-replication prerequisites
@@ -52,7 +54,7 @@ There are a few restrictions when using active geo replication:
 
 - Only the [RediSearch](redis-modules.md#redisearch) and [RedisJSON](redis-modules.md#redisjson) modules are supported
 
-- On the _Flash Optimized_ tier, only the _No Eviction_ eviction policy can be used. All eviction policies are supported on the other tiers.
+- When using RediSearch, only the _No Eviction_ eviction policy can be used. All eviction policies are supported on the other tiers.
 
 - Data persistence isn't supported because active geo-replication provides a superior experience.
 
@@ -168,6 +170,8 @@ As before, you need to list both _Cache1_ and _Cache2_ using the `-LinkedDatabas
 
 ## Scaling instances in a geo-replication group
 
+Scaling geo-replicated caches is in Public Preview.
+
 It's possible to scale instances that are configured to use active geo-replication. However, a geo-replication group with a mix of different cache sizes can introduce problems. To prevent these issues from occurring, all caches in a geo replication group need to be the same size and performance tier.
 
 Since scaling requires changing the size or tier and it's difficult to simultaneously scale all instances in the geo-replication group, Azure Managed Redis has a locking mechanism. If you scale one instance in a geo-replication group, the underlying VM is scaled, but the memory available is capped at the original size until the other instances are scaled up as well. And any other scaling operations for the remaining instances are locked until they match the same configuration as the first cache to be scaled.
@@ -236,6 +240,8 @@ To monitor the _Geo Replication Healthy_ metric in the Azure portal:
 - Use of custom hashtags – Using custom hashtags in Redis can lead to uneven distribution of data across shards, which might cause performance issues and synchronization problems in geo-replicas therefore avoid using custom hashtags unless the database needs to perform multiple key operations.
 
 - Large key size - Large keys can create synchronization issues among geo-replicas. To maintain smooth performance and reliable replication, we recommend keeping key sizes under 500MB when using geo-replication. If individual key size gets close to 2GB the cache faces geo-replication health issues.  
+ 
+- Out of memory (OOM) - Some free memory is needed for geo-replication sync to work. When the cache is under memory pressure or has reached its memory limit, syncing is paused. Reduce memory pressure by setting TTLs or changing the eviction policy. 
 
 ### Flush caches using Azure CLI or PowerShell
 

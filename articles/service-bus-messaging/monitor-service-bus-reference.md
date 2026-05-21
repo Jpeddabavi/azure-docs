@@ -1,7 +1,7 @@
 ---
 title: Monitoring data reference for Azure Service Bus
 description: This article contains important reference material you need when you monitor Azure Service Bus by using Azure Monitor.
-ms.date: 07/22/2024
+ms.date: 08/12/2025
 ms.custom: horz-monitor
 ms.topic: reference
 author: spelluru
@@ -14,6 +14,9 @@ ms.author: spelluru
 See [Monitor Azure Service Bus](monitor-service-bus.md) for details on the data you can collect for Service Bus and how to use it.
 
 [!INCLUDE [horz-monitor-ref-metrics-intro](~/reusable-content/ce-skilling/azure/includes/azure-monitor/horizontals/horz-monitor-ref-metrics-intro.md)]
+
+> [!NOTE]
+> If you see `-NamespaceOnlyMetric-` in entity names, it's not an entity name. It means that the request was for a namespace level operation.
 
 ### Supported metrics for Microsoft.ServiceBus/Namespaces
 
@@ -59,6 +62,16 @@ The following metrics are *message metrics*.
 | Abandoned Messages | The number of messages abandoned over a specified period. |
 | Size | Size of an entity (queue or topic) in bytes. |
 
+> [!NOTE]
+> **Incoming Messages and Outgoing Messages counts may not always match.** This is expected behavior and doesn't indicate message loss. Common reasons include:
+>
+> - **Duplicate detection**: Messages identified as duplicates are counted as incoming but are discarded and never become outgoing.
+> - **Topic subscription filters**: A single message sent to a topic counts as one incoming message but produces an outgoing message only for each subscription whose filter matches. If no subscription filter matches, there are zero outgoing messages for that incoming message.
+> - **Consumer lag**: If consumers receive messages more slowly than producers send them, the incoming count exceeds the outgoing count until consumers catch up.
+> - **Message expiration (TTL)**: Messages that expire before being consumed are never counted as outgoing.
+> - **Dead-lettering**: Messages moved to the dead-letter queue aren't counted as outgoing.
+> - **Autoforwarding**: In Basic and Standard tiers, autoforwarded messages are included in the incoming count but not in the outgoing count (Premium tier excludes autoforwarded messages from the incoming count).
+
 > [!IMPORTANT]
 > Values for messages, active, dead-lettered, scheduled, completed, and abandoned messages are point-in-time values. Incoming messages that were consumed immediately after that point-in-time might not be reflected in these metrics.
 
@@ -71,7 +84,7 @@ The following metrics are *connection metrics*.
 
 | Metric | Description |
 |:-------|:------------|
-| Active Connections | The number of active connections on a namespace and on an entity in the namespace. Value for this metric is a point-in-time value. Connections that were active immediately after that point-in-time may not be reflected in the metric. |
+| Active Connections | The number of active connections on a namespace and on an entity in the namespace. Value for this metric is a point-in-time value. Connections that were active immediately after that point-in-time might not be reflected in the metric. |
 | Connections Opened | The number of connections opened. Value for this metric is an aggregation, and includes all connections that were opened in the aggregation time window. |
 | Connections Closed | The number of connections closed. Value for this metric is an aggregation, and includes all connections that were opened in the aggregation time window. |
 
@@ -347,10 +360,10 @@ Diagnostic Error Logs include elements listed in this table:
 | `NamespaceName` | Name of Namespace | Yes | yes |
 | `EntityType` | Type of Entity | Yes | Yes  |
 | `EntityName` | Name of Entity | Yes | Yes   |
-| `OperationResult` | Type of error in Operation (Clienterror or Serverbusy or quotaexceeded) | Yes | Yes |
+| `OperationResult` | Type of error in Operation (`Clienterror` or `Serverbusy` or `quotaexceeded`) | Yes | Yes |
 | `ErrorCount` | Count of identical errors during the aggregation period of 1 minute. | Yes | Yes  |
 | `ErrorMessage` | Detailed Error Message | Yes | Yes  |
-| `Provider` | Name of Service emitting the logs. Possible values: eventhub, relay, and servicebus | Yes | Yes  |
+| `Provider` | Name of Service emitting the logs. Possible values: `eventhub`, `relay`, and `servicebus` | Yes | Yes  |
 | `Time Generated (UTC)` | Operation time | No | Yes |
 | `EventTimestamp` | Operation Time | Yes | No |
 | `Category` | Log category | Yes | No |

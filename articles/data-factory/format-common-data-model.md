@@ -5,7 +5,7 @@ description: Transform data using the Common Data Model metadata system in Azure
 author: kromerm
 ms.subservice: data-flows
 ms.custom: synapse
-ms.topic: conceptual
+ms.topic: reference
 ms.date: 08/04/2025
 ms.author: makromer
 ---
@@ -24,7 +24,7 @@ The Common Data Model is available as an [inline dataset](data-flow-source.md#in
 > [!NOTE]
 > When writing CDM entities, you must have an existing CDM entity definition (metadata schema) already defined to use as a reference. The data flow sink will read that CDM entity file and import the schema into your sink for field mapping.
 
-> > [!NOTE]
+> [!NOTE]
 > When using CDM with Change Data Capture (CDC) in Data Flows, updates are detected using a file-based CDC approach driven by file last modified timestamps.
 
 ### Source properties

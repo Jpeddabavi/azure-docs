@@ -1,7 +1,7 @@
 ---
 title: Java developer reference for Azure Functions
 description: Understand how to develop functions with Java.
-ms.topic: conceptual
+ms.topic: concept-article
 ms.date: 06/04/2025
 ms.devlang: java
 ms.custom: devx-track-java, devx-track-extended-java, devx-track-azurecli
@@ -15,7 +15,7 @@ As a Java developer, if you're new to Azure Functions, consider first reading on
 
 | Getting started | Concepts| Scenarios/samples |
 | -- | -- | -- |
-| <ul><li>[Java function using Visual Studio Code](./create-first-function-vs-code-java.md)</li><li>[Java/Maven function with terminal/command prompt](./how-to-create-function-azure-cli.md?pivots=programming-language-java)</li><li>[Java function using Gradle](functions-create-first-java-gradle.md)</li><li>[Java function using Eclipse](functions-create-maven-eclipse.md)</li><li>[Java function using IntelliJ IDEA](functions-create-maven-intellij.md)</li></ul> | <ul><li>[Developer guide](functions-reference.md)</li><li>[Hosting options](functions-scale.md)</li><li>[Performance&nbsp; considerations](functions-best-practices.md)</li></ul> | <ul><li>[Java samples with different triggers](/samples/azure-samples/azure-functions-samples-java/azure-functions-java/)</li><li>[Event Hubs trigger and Azure Cosmos DB output binding](/samples/azure-samples/java-functions-eventhub-cosmosdb/sample/)</li><li>[Dependency injection samples](https://github.com/Azure/azure-functions-java-worker/tree/dev/samples/dependency-injection-example)</li></ul> |
+| <ul><li>[Java function using Visual Studio Code](./how-to-create-function-vs-code.md?pivot=programming-language-java)</li><li>[Java/Maven function with terminal/command prompt](./how-to-create-function-azure-cli.md?pivots=programming-language-java)</li><li>[Java function using Gradle](functions-create-first-java-gradle.md)</li><li>[Java function using Eclipse](functions-create-maven-eclipse.md)</li><li>[Java function using IntelliJ IDEA](functions-create-maven-intellij.md)</li></ul> | <ul><li>[Developer guide](functions-reference.md)</li><li>[Hosting options](functions-scale.md)</li><li>[Performance&nbsp; considerations](functions-best-practices.md)</li></ul> | <ul><li>[Java samples with different triggers](/samples/azure-samples/azure-functions-samples-java/azure-functions-java/)</li><li>[Event Hubs trigger and Azure Cosmos DB output binding](/samples/azure-samples/java-functions-eventhub-cosmosdb/sample/)</li><li>[Dependency injection samples](https://github.com/Azure/azure-functions-java-worker/tree/dev/samples/dependency-injection-example)</li></ul> |
 
 ## Java function basics
 
@@ -41,7 +41,7 @@ These articles show you how to create your first functions using your IDE of cho
 
 ### Project scaffolding
 
-If you prefer command line development from the Terminal, the simplest way to scaffold Java-based function projects is to use `Apache Maven` archetypes. The Java Maven archetype for Azure Functions is published under the following _groupId_:_artifactId_: [com.microsoft.azure:azure-functions-archetype](https://search.maven.org/artifact/com.microsoft.azure/azure-functions-archetype/). 
+If you prefer command line development from the Terminal, the simplest way to scaffold Java-based function projects is to use `Apache Maven` archetypes. The Java Maven archetype for Azure Functions is published under the following _groupId_:_artifactId_: [com.microsoft.azure:azure-functions-archetype](https://central.sonatype.com/artifact/com.microsoft.azure/azure-functions-archetype). 
 
 The following command generates a new Java function project using this archetype:
 

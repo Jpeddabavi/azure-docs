@@ -4,7 +4,10 @@ description: Learn how to connect your function app to Application Insights for 
 ms.service: azure-functions
 ms.topic: how-to
 ms.date: 05/19/2025
-ms.custom: devdivchpfy22
+ms.custom:
+  - devdivchpfy22
+  - sfi-image-nochange
+  - sfi-ropc-nochange
 
 # Customer intent: As a developer, I want to understand how to configure monitoring for my functions correctly, so I can collect the data that I need.
 ---
@@ -54,7 +57,7 @@ The following table describes the main categories of logs that the runtime creat
 | ----- | ----- | ----- |
 | **`Function`** | **traces**| Includes function started and completed logs for all function runs. For successful runs, these logs are at the `Information` level. Exceptions are logged at the `Error` level. The runtime also creates `Warning` level logs, such as when queue messages are sent to the [poison queue](functions-bindings-storage-queue-trigger.md#poison-messages).|
 | **`Function.<YOUR_FUNCTION_NAME>`** | **dependencies**| Dependency data is automatically collected for some services. For successful runs, these logs are at the `Information` level. For more information, see [Dependencies](functions-monitoring.md#dependencies). Exceptions are logged at the `Error` level. The runtime also creates `Warning` level logs, such as when queue messages are sent to the [poison queue](functions-bindings-storage-queue-trigger.md#poison-messages). |
-| **`Function.<YOUR_FUNCTION_NAME>`** | **customMetrics**<br/>**customEvents** | C# and JavaScript SDKs lets you collect custom metrics and log custom events. For more information, see [Custom telemetry data](functions-monitoring.md#custom-telemetry-data).|
+| **`Function.<YOUR_FUNCTION_NAME>`** | **customMetrics**<br/>**customEvents** | Language-specific SDKs let you collect custom metrics and log custom events. The recommended approach is to use the [OpenTelemetry exporter](opentelemetry-howto.md). For more information, see [Custom telemetry data](functions-monitoring.md#custom-telemetry-data).|
 | **`Function.<YOUR_FUNCTION_NAME>`** | **traces**| Includes function started and completed logs for specific function runs. For successful runs, these logs are at the `Information` level. Exceptions are logged at the `Error` level. The runtime also creates `Warning` level logs, such as when queue messages are sent to the [poison queue](functions-bindings-storage-queue-trigger.md#poison-messages). |
 | **`Function.<YOUR_FUNCTION_NAME>.User`** | **traces**| User-generated logs, which can be any log level. For more information about writing to logs from your functions, see [Writing to logs](functions-monitoring.md#writing-to-logs). |
 | **`Host.Aggregator`** | **customMetrics** | These runtime-generated logs provide counts and averages of function invocations over a [configurable](#configure-the-aggregator) period of time. The default period is 30 seconds or 1,000 results, whichever comes first. Examples are the number of runs, success rate, and duration. All of these logs are written at the `Information` level. If you filter at `Warning` or higher, you don't see any of this data. |
@@ -290,7 +293,7 @@ For a function app to send data to Application Insights, it needs to connect to 
 | **[`APPLICATIONINSIGHTS_CONNECTION_STRING`](functions-app-settings.md#applicationinsights_connection_string)** | This setting is recommended and is required when your Application Insights instance runs in a sovereign cloud. The connection string supports other [new capabilities](/azure/azure-monitor/app/migrate-from-instrumentation-keys-to-connection-strings#new-capabilities).   |
 | **[`APPINSIGHTS_INSTRUMENTATIONKEY`](functions-app-settings.md#appinsights_instrumentationkey)** | Legacy setting, which Application Insights has deprecated in favor of the connection string setting. |
 
-When you create your function app in the [Azure portal](./functions-get-started.md) from the command line by using [Azure Functions Core Tools](./how-to-create-function-azure-cli.md?pivots=programming-language-csharp) or [Visual Studio Code](./create-first-function-vs-code-csharp.md), Application Insights integration is enabled by default. The Application Insights resource has the same name as your function app, and is created either in the same region or in the nearest region.
+When you create your function app in the [Azure portal](./functions-get-started.md) from the command line by using [Azure Functions Core Tools](./how-to-create-function-azure-cli.md?pivots=programming-language-csharp) or [Visual Studio Code](./how-to-create-function-vs-code.md?pivot=programming-language-csharp), Application Insights integration is enabled by default. The Application Insights resource has the same name as your function app, and is created either in the same region or in the nearest region.
 
 ### Require Microsoft Entra authentication 
 

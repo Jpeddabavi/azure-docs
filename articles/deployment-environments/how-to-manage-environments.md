@@ -20,7 +20,7 @@ In Azure Deployment Environments, a platform engineer gives developers access to
 ## Prerequisites
 
 - Access to a project that has at least one environment type.
-- The [Deployment Environments User](how-to-configure-deployment-environments-user.md) role, the [DevCenter Project Admin](how-to-configure-project-admin.md) role, or a [built-in role](../role-based-access-control/built-in-roles.md) that has the required permissions to create an environment.
+- The [Deployment Environments User](how-to-manage-deployment-environments-access.md) role, the [DevCenter Project Admin](how-to-manage-deployment-environments-access.md) role, or a [built-in role](../role-based-access-control/built-in-roles.md) that has the required permissions to create an environment.
 
 ## Create an environment by using the developer portal
 
@@ -112,16 +112,12 @@ To forcibly delete an environment from the CLI, follow these steps:
 1. Run the following command to forcibly delete the environment:
 
    ```bash
-   az devcenter dev environment delete --name <environment-name> --dev-center <dev-center-name> --project-name <project-name> --force
+   az devcenter dev environment delete --name <environment-name> --dev-center-name <dev-center-name> --project-name <project-name> --force
    ```
 
     Replace `<environment-name>` with the name of the environment you want to delete, `<dev-center-name>` with the name of your dev center, and `<project-name>` with the name of the project that the environment belongs to.
 
 For more information about the `az devcenter dev environment delete` command, see [az devcenter dev environment delete](/cli/azure/devcenter/dev/environment).
-
-> [!IMPORTANT]
-> The force delete feature is currently in PREVIEW.
-> For more information about the preview status, see the [Supplemental Terms of Use for Microsoft Azure Previews](https://azure.microsoft.com/support/legal/preview-supplemental-terms/). The document defines legal terms that apply to Azure features that are in beta, preview, or otherwise not yet released into general availability.
 
 ## Manage an environment by using the Azure CLI
 

@@ -4,9 +4,10 @@ description: "Quickstart: Configure devices, assets, and data flows in your clus
 author: dominicbetts
 ms.author: dobett
 ms.topic: quickstart
+ms.date: 07/18/2025
 ms.custom:
   - ignite-2023
-ms.date: 07/18/2025
+  - sfi-image-nochange
 
 #CustomerIntent: As an OT user, I want to configure my Azure IoT Operations cluster so that I can see how to process and route data to a cloud endpoint.
 ---
@@ -36,7 +37,7 @@ Unless otherwise noted, you can run the console commands in this quickstart in e
 
 ## What problem will we solve?
 
-The data that OPC UA servers expose can have a complex structure and can be difficult to understand. Azure IoT Operations provides a way to model OPC UA assets as tags, events, and properties. This modeling makes it easier to understand the data and to use it in downstream processes such as the MQTT broker and data flows. Data flows let you manipulate and route data to cloud services such as Azure Event Hubs. In this quickstart, the data flow changes the names of some fields in payload and adds an asset ID to the messages.
+The data that OPC UA servers expose can have a complex structure and can be difficult to understand. Azure IoT Operations provides a way to model OPC UA assets as data points, events, and actions. This modeling makes it easier to understand the data and to use it in downstream processes such as the MQTT broker and data flows. Data flows let you manipulate and route data to cloud services such as Azure Event Hubs. In this quickstart, the data flow changes the names of some fields in payload and adds an asset ID to the messages.
 
 ## Deploy the OPC PLC simulator
 
@@ -88,7 +89,7 @@ $CLUSTER_NAME = "<kubernetes-cluster-name>"
 Run the following commands to download and run the Bicep file that configures your Azure IoT Operations instance. The Bicep file:
 
 - Adds a device that connects to the OPC PLC simulator.
-- Adds a namespace asset that represents the oven and defines the data points that the oven exposes.
+- Adds an asset that represents the oven and defines the data points that the oven exposes.
 - Adds a data flow that manipulates the messages from the simulated oven.
 - Creates an Azure Event Hubs instance to receive the data.
 

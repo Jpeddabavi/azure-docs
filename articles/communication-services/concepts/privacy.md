@@ -2,13 +2,13 @@
 title: Data residency and user privacy for Azure Communication Services
 titleSuffix: An Azure Communication Services article
 description: This article describes data residency and privacy related matters on Azure Communication Services.
-author: tophpalmer
+author: sundiraman
 manager: anvalent
 services: azure-communication-services
 
-ms.author: chpalm
+ms.author: sundraman
 ms.date: 03/07/2023
-ms.topic: conceptual
+ms.topic: concept-article
 ms.service: azure-communication-services
 ms.custom: references_regions
 ---
@@ -69,7 +69,7 @@ You can use the Azure portal or Azure Resource Manager APIs with Azure Communica
 
 ### Telephone number management
 
-Azure Communication Services maintains a directory of phone numbers associated with a Communication Services resource. Use [Phone Number Administration APIs](/rest/api/communication/phonenumbers) to retrieve phone numbers and delete them:
+Azure Communication Services maintains a directory of phone numbers associated with a Communication Services resource. Use [Phone Number Administration APIs](/rest/api/communication/phonenumbers/phone-numbers) to retrieve phone numbers and delete them:
 
 - `Get All Phone Numbers`
 - `Release Phone Number`
@@ -125,4 +125,4 @@ Azure Communication Services feed into Azure Monitor logging data for understand
 
 - [Azure Data Subject Requests for the GDPR and CCPA](/microsoft-365/compliance/gdpr-dsr-azure).
 - [Microsoft Trust Center](https://www.microsoft.com/trust-center/privacy/data-location).
-- [Azure Interactive Map - Where is my customer data?](https://infrastructuremap.microsoft.com/).
+- [Azure Interactive Map - Where is my customer data?](https://infrastructuremap.microsoft.com/)

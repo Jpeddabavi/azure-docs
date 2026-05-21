@@ -1,12 +1,12 @@
 ---
 title: What is a network security perimeter?
 titleSuffix: Azure Private Link
-description: Learn how Azure Network Security Perimeter secures PaaS resources with logical network boundaries. Control public access, prevent data exfiltration, and manage access rules for Storage, SQL Database, and Key Vault.
+description: Learn how Azure Network Security Perimeter secures PaaS resources with logical network boundaries. Control public access, prevent data exfiltration, and manage access rules for Storage, Azure AI Search, and Key Vault.
 author: mbender-ms
 ms.author: mbender
 ms.service: azure-private-link
 ms.topic: overview
-ms.date: 08/01/2025
+ms.date: 03/22/2026
 ms.custom:
   - references_regions, ignite-2024
   - ai-gen-docs-bap
@@ -16,11 +16,11 @@ ms.custom:
 
 # What is a network security perimeter?
 
-Azure Network Security Perimeter creates logical network boundaries around your platform-as-a-service (PaaS) resources that are deployed outside your virtual networks. Network security perimeter helps you control public network access to resources like Azure Storage accounts and SQL Database servers by establishing a secure perimeter.
+Azure Network Security Perimeter creates logical network boundaries around your platform-as-a-service (PaaS) resources that are deployed outside your virtual networks. Network security perimeter helps you control public network access to resources like Azure Storage accounts and Azure Key Vault by establishing a secure perimeter.
 
 By default, network security perimeter restricts public access to PaaS resources within the boundary. You can grant exceptions through explicit access rules for inbound and outbound traffic. This approach helps prevent data exfiltration while maintaining necessary connectivity for your applications.
 
-For access patterns involving traffic from virtual networks to PaaS resources, see [What is Azure Private Link?](private-link-overview.md).
+For access patterns involving traffic from virtual networks to PaaS resources, see [What is Azure Private Link?](private-link-overview.md)
 
 Features of a network security perimeter include:
 
@@ -88,7 +88,7 @@ When a network security perimeter is created and the PaaS resources are associat
 
 Access rules can be used to approve public inbound and outbound traffic outside the perimeter. Public inbound access can be approved using Network and Identity attributes of the client such as source IP addresses, subscriptions. Public outbound access can be approved using FQDNs (Fully Qualified Domain Names) of the external destinations. 
 
-For example, upon creating a network security perimeter and associating a set of PaaS resources with the perimeter like Azure Key Vault and SQL DB in enforced mode, all incoming and outgoing public traffic is denied to these PaaS resources by default. To allow any access outside the perimeter, necessary access rules can be created. Within the same perimeter, profiles can be created to group PaaS resources with similar set of inbound and outbound access requirements.
+For example, upon creating a network security perimeter and associating a set of PaaS resources with the perimeter like Azure Key Vault and Azure Storage in enforced mode, all incoming and outgoing public traffic is denied to these PaaS resources by default. To allow any access outside the perimeter, necessary access rules can be created. Within the same perimeter, profiles can be created to group PaaS resources with similar set of inbound and outbound access requirements.
 
 ## Onboarded private link resources
 
@@ -102,14 +102,16 @@ A network security perimeter-aware private link resource is a PaaS resource that
 | [Event Hubs](/azure/event-hubs/network-security-perimeter)                | Microsoft.EventHub/namespaces | | Generally Available |
 | [Key Vault](/azure/key-vault/general/network-security#network-security-perimeter-preview)                 | Microsoft.KeyVault/vaults | | Generally Available |
 | [SQL DB](/azure/azure-sql/database/network-security-perimeter)                    | Microsoft.Sql/servers | | Public Preview |
-| [Storage](/azure/storage/common/storage-network-security#network-secuirty-perimeter-preview)               | Microsoft.Storage/storageAccounts | | Generally Available |
-| [Azure OpenAI service](/azure/ai-services/openai/how-to/network-security-perimeter) | Microsoft.CognitiveServices | | Public Preview |
+| [Storage](/azure/storage/common/storage-network-security#network-security-perimeter-preview)               | Microsoft.Storage/storageAccounts | | Generally Available |
+| [Azure OpenAI service](/azure/ai-services/openai/how-to/network-security-perimeter) | Microsoft.CognitiveServices(kind="OpenAI") | | Public Preview |
+| [Microsoft Foundry](/azure/ai-foundry/how-to/add-foundry-to-network-security-perimeter) | Microsoft.CognitiveServices(kind="AIServices") | | Generally Available |
+| [Azure Service Bus](/azure/service-bus-messaging/network-security-perimeter) | Microsoft.ServiceBus/namespaces | | Generally Available |
 
 > [!IMPORTANT]
 > The following onboarded services are in public preview with Network Security Perimeter:
 > - Cosmos DB
 > - SQL DB
-> - Azure Open AI Service
+> - Azure OpenAI Service
 >   
 > These previews are provided without a service level agreement, and it's not recommended for production workloads.
 > Certain features might not be supported or might have constrained capabilities.
@@ -118,24 +120,37 @@ A network security perimeter-aware private link resource is a PaaS resource that
 > [!NOTE]
 > Refer to the respective private link resource documentation for information on currently unsupported scenarios.
 
+## Where is network security perimeter available?
+
+Network security perimeter is currently available in all Azure public cloud regions and in Azure Government regions (US Gov Virginia, US Gov Texas, US Gov Arizona, US DoD East and US DoD Central). 
+
 ## Supported access rule types
 
 Network security perimeter supports the following access rule types:
 
 | Direction | Access rule type | 
 |---------------------------|---------------|
-| Inbound | Subscription based rules |
-| Inbound | IP based rules (check respective onboarded private link resources for v6 support)| 
-| Outbound | FQDN based rules |
+| Inbound | Subscription-based rules |
+| Inbound | IP-based rules (check respective onboarded private link resources for v6 support)| 
+| Outbound | FQDN-based rules |
+
+> [!NOTE]
+> Intra-perimeter traffic and inbound access rules that are subscription-based don't support authentication via shared access signature (SAS) token. In these scenarios, requests that use an SAS token are rejected and display an authentication error. Use an alternative supported authentication method per your specific resource.
 
 ## Limitations of a network security perimeter
 
 ### Logging limitations
 
-Network security perimeter is currently available in all Azure public cloud regions. However, while enabling access logs for network security perimeter, the Log Analytics workspace to be associated with the network security perimeter needs to be located in one of the Azure Monitor supported regions.
+While enabling access logs for network security perimeter, the Log Analytics workspace to be associated with the network security perimeter needs to be located in one of the Azure Monitor supported regions.
 
 > [!NOTE]
 > For PaaS resource logs, use **Log Analytics Workspace, Storage or Event Hub** as the log destination associated to the same perimeter as the PaaS resource.
+
+### Microsoft Sentinel limitations
+
+The following are known limitations:
+* Network security perimeters aren't supported for Log Analytics workspaces enabled for Microsoft Sentinel. If a network security perimeter is enabled on the workspace, analytic rules are automatically disabled. For more information, see [Prerequisites for deploying Microsoft Sentinel](/azure/sentinel/prerequisites).
+* Azure Backup is not supported for Storage Accounts enabled with network security perimeter. We recommend not associating a storage account with network security perimeter if you have backups enabled or if you plan to use Azure Backup.
 
 [!INCLUDE [network-security-perimeter-limits](../../includes/network-security-perimeter-limits.md)]
 

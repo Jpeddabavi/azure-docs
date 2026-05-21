@@ -6,6 +6,7 @@ ms.suite: integration
 ms.reviewer: estfan, daviburg, apseth, psrivas, azla
 ms.topic: how-to
 ms.date: 07/16/2025
+ms.custom: sfi-image-nochange
 ---
 
 # Create custom built-in connectors for Standard logic apps in single-tenant Azure Logic Apps
@@ -31,7 +32,7 @@ For more information, review the following documentation:
 
 ## Prerequisites
 
-* An Azure account and subscription. If you don't have a subscription, [sign up for a free Azure account](https://azure.microsoft.com/free/?WT.mc_id=A261C142F).
+* An Azure account and subscription. If you don't have a subscription, [sign up for a free Azure account](https://azure.microsoft.com/pricing/purchase-options/azure-account?cid=msft_learn).
 
 * Basic knowledge about single-tenant Azure Logic Apps, Standard logic app workflows, connectors, and how to use Visual Studio Code for creating single tenant-based workflows. For more information, review the following documentation:
 
@@ -452,4 +453,4 @@ To add the NuGet reference from the previous section, in the extension bundle na
 
 * [Source for sample custom built-in Azure Cosmos DB connector - Azure Logic Apps Connector Extensions](https://github.com/Azure/logicapps-connector-extensions/tree/CosmosDB/src/CosmosDB)
 
-* [Built-in Service Bus trigger: batching and session handling](https://techcommunity.microsoft.com/t5/integrations-on-azure-blog/azure-logic-apps-running-anywhere-built-in-service-bus-trigger/ba-p/2079995)
+* [Built-in Service Bus trigger: batching and session handling](https://techcommunity.microsoft.com/blog/integrationsonazureblog/azure-logic-apps-running-anywhere---built-in-service-bus-trigger-batching-and-se/2079995)

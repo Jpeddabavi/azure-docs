@@ -8,7 +8,7 @@ services: azure-communication-services
 
 ms.author: dbasantes
 ms.date: 07/15/2025
-ms.topic: conceptual
+ms.topic: concept-article
 ms.service: azure-communication-services
 ms.subservice: sms
 ms.custom: references_regions
@@ -265,7 +265,7 @@ Here’s how the Marketplace flow works:
 
 This setup simplifies procurement and allows Messaging Connect usage to count toward your Azure MACC commitment.
 
-Learn more: [Azure Marketplace](https://learn.microsoft.com/marketplace/azure-marketplace-overview)
+Learn more: [Azure Marketplace](/marketplace/azure-marketplace-overview)
 
 > [!TIP] 
 > Whether you choose Partner or Marketplace billing, the technical experience in Azure remains exactly the same.
