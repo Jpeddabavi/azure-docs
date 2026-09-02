@@ -49,7 +49,10 @@ sections:
     questions:
       - question: Can I upgrade an existing AKS cluster with Application Gateway for Containers from CNI to CNI Overlay?
         answer: Yes. Upgrade of the AKS cluster from CNI to CNI Overlay and Application Gateway for Containers automatically detects the change. It's recommended to schedule this during a maintenance window as it can take a few minutes post-cluster upgrade to detect and configure support for CNI Overlay.
-        
+      
+      - question: Why does Application Gateway for Containers validation fail when my delegated subnet is in a secondary VNet address space?
+        answer: the OverlayExtensionConfig (OEC) validation used by Application Gateway for Containers may not recognize a correctly configured secondary VNet address space and can incorrectly report the delegated subnet as being outside the virtual network address range. This is a known issue, and the AKS engineering team is actively working on a fix. No ETA is currently available.   
+   
   - name: Configuration - TLS
     questions:
       - question: Does Application Gateway for Containers support reencryption (end-to-end encryption) of traffic to backend targets?
